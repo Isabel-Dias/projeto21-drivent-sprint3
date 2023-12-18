@@ -2,17 +2,11 @@ import faker from '@faker-js/faker';
 import httpStatus from 'http-status';
 import * as jwt from 'jsonwebtoken';
 import supertest from 'supertest';
-import { cleanDb, generateValidToken } from '../helpers';
-import app, { init } from '@/app';
-import {
-  createEnrollmentWithAddress,
-  createTicket,
-  createTicketType,
-  createTicketTypeWithParameters,
-  createUser,
-} from '../factories';
-import { createHotel, createManyRooms } from '../factories/hotels-factory';
 import { TicketStatus } from '@prisma/client';
+import { cleanDb, generateValidToken } from '../helpers';
+import { createEnrollmentWithAddress, createTicket, createTicketTypeWithParameters, createUser } from '../factories';
+import { createHotel, createManyRooms } from '../factories/hotels-factory';
+import app, { init } from '@/app';
 
 beforeAll(async () => {
   await init();
@@ -288,7 +282,7 @@ describe('GET /hotels/:hotelId', () => {
       await createTicket(enrollment.id, ticketType.id, TicketStatus.PAID);
 
       const hotel = await createHotel();
-      await createManyRooms(hotel.id)
+      await createManyRooms(hotel.id);
 
       const response = await server.get(`/hotels/${hotel.id}`).set('Authorization', `Bearer ${token}`);
 

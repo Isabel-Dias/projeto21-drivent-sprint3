@@ -13,7 +13,7 @@ export async function createHotel() {
   });
 }
 
-export async function createManyRooms(hotelId: Number) {
+export async function createManyRooms(hotelId: number) {
   const now = new Date();
   return await prisma.room.createMany({
     data: [
@@ -34,7 +34,7 @@ export async function createManyRooms(hotelId: Number) {
         capacity: faker.datatype.number(),
         hotelId: Number(hotelId),
         updatedAt: now,
-      }
+      },
     ],
   });
 }

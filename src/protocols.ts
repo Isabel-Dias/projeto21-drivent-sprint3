@@ -1,4 +1,4 @@
-import { Payment, Ticket, Hotel, Room } from "@prisma/client";
+import { Payment, Ticket, Room } from '@prisma/client';
 
 export type ApplicationError = {
   name: string;
@@ -53,4 +53,4 @@ export type HotelWithRooms = {
   Rooms: Room[];
   createdAt: string;
   updatedAt: string;
-}
+};
