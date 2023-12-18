@@ -5,39 +5,24 @@ import { enrollmentRepository, ticketsRepository } from '@/repositories';
 import { HotelsRepository } from '@/repositories/hotels-repository';
 
 async function getAllHotelsByUserId(userId: number): Promise<Hotel[]> {
+  await hotelsValidation(userId);
+  
   const hotels = await HotelsRepository.findHotels();
 
   if (hotels.length === 0) throw notFoundError();
-
-  await hotelsValidation(userId);
 
   return hotels;
 }
 
 async function getHotelById(hotelId: number, userId: number) {
+  
+  await hotelsValidation(userId);
+
   if (!hotelId || typeof hotelId !== 'number') throw notFoundError();
 
   const resultHotel = await HotelsRepository.findHotelById(hotelId);
 
   if (!resultHotel) throw notFoundError();
-
-  await hotelsValidation(userId);
-
-  /*const hotel = {
-    id: resultHotel.id,
-    name: resultHotel.name,
-    image: resultHotel.image,
-    createdAt: resultHotel.createdAt.toISOString(),
-    updatedAt: resultHotel.updatedAt.toISOString(),
-    Rooms: resultHotel.Rooms.map(room => ({
-      id: room.id,
-      name: room.name,
-      capacity: room.capacity,
-      hotelId: room.hotelId,
-      createdAt: room.createdAt.toISOString(),
-      updatedAt: room.updatedAt.toISOString(),
-    }))
-  }*/
 
   return resultHotel;
 }
